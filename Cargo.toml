@@ -5,7 +5,7 @@ edition = "2021"
 description = "A command line tool that let you know when the sun rises and sets in a city on any given date"
 license = "MIT"
 repository = "https://github.com/marsavar/suntrack"
-keywords = ["sunrise", "sunset", "cli", "cities", "world", "time", "date", "utc", "local", "offline"]
+keywords = ["sunrise", "sunset", "time", "cli", "offline"]
 categories = ["command-line-interface", "command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
