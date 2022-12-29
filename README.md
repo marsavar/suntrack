@@ -4,7 +4,7 @@
 
 ### Installation
 ```shell
-cargo install suntrack
+$ cargo install suntrack
 ```
 
 ### Usage
@@ -24,7 +24,7 @@ Options:
 
 Example:
 ```shell
-suntrack stockholm
+$ suntrack stockholm
 ```
 
 ```
@@ -36,7 +36,7 @@ suntrack stockholm
 If more than one match is found, `suntrack` lets you disambiguate with multiple choices. For instance:
 
 ```shell
-suntrack london
+$ suntrack london
 ```
 
 ```
@@ -59,7 +59,7 @@ If you want to use your local system time instead of UTC, you can use the flag `
 For example, if you were based in New South Wales and wanted to check sunrise and sunset times for Sydney, the times would be displayed using UTC+11.
 
 ```shell
-suntrack -l sydney
+$ suntrack -l sydney
 ```
 
 ```
@@ -72,7 +72,7 @@ suntrack -l sydney
 `suntrack` defaults to today's sunrise and sunset times. However, you can use the `-d <DATE>` or `--date <DATE>` flag to pick an arbitrary date in the format `YYYY-MM-DD`. 
 
 ```shell
-suntrack -d 2025-08-15 'London (GB)'
+$ suntrack -d 2025-08-15 'London (GB)'
 ```
 ```
 🌍 City 	London (GB)
