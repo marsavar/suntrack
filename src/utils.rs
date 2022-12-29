@@ -1,7 +1,7 @@
 use regex::Regex;
 use std::{io, num::ParseIntError};
 
-use crate::models::Uppercase;
+use crate::models::{City, Uppercase};
 
 pub fn pick_option() -> Result<usize, ParseIntError> {
     println!("Input number: ");
@@ -10,7 +10,7 @@ pub fn pick_option() -> Result<usize, ParseIntError> {
     buffer.trim().parse::<usize>()
 }
 
-pub fn city_and_country(city: String) -> (String, String) {
+pub fn city_and_country(city: City) -> (String, String) {
     let regex = Regex::new(r"(.+) (\(.+\))").unwrap();
     let captures = &regex.captures(&city).unwrap();
     (

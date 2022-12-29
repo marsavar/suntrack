@@ -2,6 +2,7 @@
 
 `suntrack` is a command line tool that lets you know when the sun rises and sets in a given city.
 
+### Installation
 ```shell
 cargo install suntrack
 ```
@@ -32,7 +33,7 @@ suntrack stockholm
 🌆 Sunset	2022-12-29 13:54:03 UTC
 ```
 
-If more than one match is found, `suntrack` lets you disambiguate with multiple choice. For instance:
+If more than one match is found, `suntrack` lets you disambiguate with multiple choices. For instance:
 
 Example:
 ```shell
