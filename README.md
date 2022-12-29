@@ -9,7 +9,7 @@ cargo install suntrack
 
 ### Usage
 ```
-A command line tool that shows when the sun rises and sets in any given city
+A command line tool that lets you know when the sun rises and sets in a city on any given date
 
 Usage: suntrack [OPTIONS] <CITY>
 

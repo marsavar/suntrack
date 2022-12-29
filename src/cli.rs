@@ -2,8 +2,8 @@ use chrono::NaiveDate;
 use clap::Parser;
 
 #[derive(Parser)]
-/// A command line tool that shows when the sun rises and sets in
-/// any given city
+/// A command line tool that lets you know when the sun rises and sets in a city
+/// on any given date
 pub struct Cli {
     /// The name of the city
     pub city: String,
