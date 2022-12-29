@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 
-use chrono::{Local, TimeZone, Utc};
-use regex::Regex;
+use chrono::{Datelike, Local, NaiveDate, TimeZone, Utc};
 use serde::Deserialize;
+
+use crate::utils::city_and_country;
 
 pub type City = String;
 
@@ -11,7 +12,6 @@ pub struct Row {
     pub city: String,
     pub lat: f64,
     pub long: f64,
-    pub iso: String,
 }
 
 #[derive(Debug)]
@@ -31,12 +31,28 @@ impl MapOfCities {
         }
     }
 
-    pub fn print_coords(&self, cities: Vec<&City>, index: usize, local: bool) {
+    pub fn print_coords(
+        &self,
+        cities: Vec<&City>,
+        index: usize,
+        local: bool,
+        date: Option<NaiveDate>,
+    ) {
         let Coords { lat, long } = self.map[cities[index]];
 
-        let city = cities[index].to_uppercase_every_word();
+        let date = date.unwrap_or_else(|| {
+            if local {
+                let today = Utc::now();
+                NaiveDate::from_ymd_opt(today.year(), today.month(), today.day()).unwrap()
+            } else {
+                let today = Local::now();
+                NaiveDate::from_ymd_opt(today.year(), today.month(), today.day()).unwrap()
+            }
+        });
 
-        let (sunrise, sunset) = sunrise::sunrise_sunset(lat, long, 2022, 12, 29);
+        let (sunrise, sunset) =
+            sunrise::sunrise_sunset(lat, long, date.year(), date.month(), date.day());
+
         let (sunrise, sunset) = if local {
             (
                 Local.timestamp_opt(sunrise, 0).unwrap().to_string(),
@@ -49,14 +65,8 @@ impl MapOfCities {
             )
         };
 
-        let regex = Regex::new(r"(.+) (\(.+\))").unwrap();
-        let captures = &regex.captures(&city).unwrap();
-
-        let (city, country) = (&captures[1], &captures[2].to_uppercase());
-
-        println!("🌍 {} {}", city, country);
-        println!("🌄 Sunrise: {sunrise}");
-        println!("🌆 Sunset: {sunset}");
+        let (city, country) = city_and_country(cities[index].to_uppercase_every_word());
+        println!("🌍 City \t{city} {country}\n🌄 Sunrise\t{sunrise}\n🌆 Sunset\t{sunset}",);
     }
 }
 

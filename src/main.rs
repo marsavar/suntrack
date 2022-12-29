@@ -1,19 +1,22 @@
 use crate::cli::Cli;
-use crate::io::pick_option;
-use crate::models::{City, Coords, Row, Uppercase};
+use crate::models::{City, Coords, Row};
+use crate::utils::{city_and_country, pick_option};
 use asciifolding::fold_to_ascii;
 use clap::Parser;
 use models::MapOfCities;
-use regex::Regex;
 use std::process;
 
 mod cli;
-mod io;
 mod models;
+mod utils;
 
 fn main() {
     let mut all_cities = MapOfCities::new();
 
+    // A modified version of the simplemaps.com World Cities Database,
+    // which is licensed under Creative Commons Attribution 4.0
+    // https://simplemaps.com/data/world-cities
+    // `city` and `iso2` have been merged into one
     let cities = include_str!("cities.csv");
 
     let mut reader = csv::ReaderBuilder::new().from_reader(cities.as_bytes());
@@ -21,7 +24,7 @@ fn main() {
     for result in reader.deserialize() {
         let row: Row = result.unwrap();
         all_cities.map.insert(
-            format!("{} ({})", row.city, row.iso),
+            row.city,
             Coords {
                 lat: row.lat,
                 long: row.long,
@@ -43,19 +46,12 @@ fn main() {
             println!("Found no results for {city}");
             process::exit(0);
         }
-        1 => all_cities.print_coords(cities, 0, cli.local),
+        1 => all_cities.print_coords(cities, 0, cli.local, cli.date),
         l => 'prompt_input: loop {
             println!("Found {} options for {}:", l, city);
 
             for choice in 1..=l {
-                let regex = Regex::new(r"(.+) (\(.+\))").unwrap();
-                let captures = &regex.captures(&cities[choice - 1]).unwrap();
-
-                let (city, country) = (
-                    &captures[1].to_string().to_uppercase_every_word(),
-                    &captures[2].to_uppercase(),
-                );
-
+                let (city, country) = city_and_country(cities[choice - 1].clone());
                 println!("{choice}) {} {}", city, country);
             }
 
@@ -65,7 +61,7 @@ fn main() {
                 if c > l {
                     continue 'prompt_input;
                 } else {
-                    all_cities.print_coords(cities, c - 1, cli.local);
+                    all_cities.print_coords(cities, c - 1, cli.local, cli.date);
                     break 'prompt_input;
                 }
             }
