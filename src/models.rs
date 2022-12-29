@@ -31,7 +31,7 @@ impl MapOfCities {
         }
     }
 
-    pub fn print_coords(
+    pub fn print_times(
         &self,
         cities: Vec<&City>,
         index: usize,
@@ -53,19 +53,25 @@ impl MapOfCities {
         let (sunrise, sunset) =
             sunrise::sunrise_sunset(lat, long, date.year(), date.month(), date.day());
 
-        let (sunrise, sunset) = if local {
-            (
-                Local.timestamp_opt(sunrise, 0).unwrap().to_string(),
-                Local.timestamp_opt(sunset, 0).unwrap().to_string(),
-            )
+        let (city, country) = city_and_country(cities[index].to_uppercase_every_word());
+
+        let (sunrise, sunset) = if sunrise == 0 && sunset == 0 {
+            ("No sunrise".to_owned(), "No sunset".to_owned())
         } else {
-            (
-                Utc.timestamp_opt(sunrise, 0).unwrap().to_string(),
-                Utc.timestamp_opt(sunset, 0).unwrap().to_string(),
-            )
+            match local {
+                true => (
+                    // Local system time
+                    Local.timestamp_opt(sunrise, 0).unwrap().to_string(),
+                    Local.timestamp_opt(sunset, 0).unwrap().to_string(),
+                ),
+                false => (
+                    // UTC
+                    Utc.timestamp_opt(sunrise, 0).unwrap().to_string(),
+                    Utc.timestamp_opt(sunset, 0).unwrap().to_string(),
+                ),
+            }
         };
 
-        let (city, country) = city_and_country(cities[index].to_uppercase_every_word());
         println!("🌍 City \t{city} {country}\n🌄 Sunrise\t{sunrise}\n🌆 Sunset\t{sunset}",);
     }
 }

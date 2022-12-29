@@ -46,7 +46,7 @@ fn main() {
             println!("Found no results for {city}");
             process::exit(0);
         }
-        1 => all_cities.print_coords(cities, 0, cli.local, cli.date),
+        1 => all_cities.print_times(cities, 0, cli.local, cli.date),
         l => 'prompt_input: loop {
             println!("Found {} options for {}:", l, city);
 
@@ -61,7 +61,7 @@ fn main() {
                 if c > l {
                     continue 'prompt_input;
                 } else {
-                    all_cities.print_coords(cities, c - 1, cli.local, cli.date);
+                    all_cities.print_times(cities, c - 1, cli.local, cli.date);
                     break 'prompt_input;
                 }
             }
