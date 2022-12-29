@@ -1,0 +1,15 @@
+[package]
+name = "suntrack"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+asciifolding = "0.1.0"
+chrono = "0.4.23"
+clap = { version = "4.0.32", features = ["derive"] }
+csv = "1.1.6"
+regex = "1.7.0"
+serde = { version = "1.0.152", features = ["derive"] }
+sunrise = "1.0.0"
