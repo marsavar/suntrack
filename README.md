@@ -35,7 +35,6 @@ suntrack stockholm
 
 If more than one match is found, `suntrack` lets you disambiguate with multiple choices. For instance:
 
-Example:
 ```shell
 suntrack london
 ```
