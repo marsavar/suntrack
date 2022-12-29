@@ -13,7 +13,7 @@ jobs:
   release:
     name: Publish crate
     env:
-      PROJECT_NAME: aletheia
+      PROJECT_NAME: suntrack
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
